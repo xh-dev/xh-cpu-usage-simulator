@@ -43,7 +43,7 @@ if __name__ == '__main__':
     r = dict()
     cpu_count = psutil.cpu_count(logical=False)
     for i in range(cpu_count):
-        d.update({f"{i}": iv/cpu_count})
+        d.update({f"{i}": iv / cpu_count})
         r.update({f"{i}-complete": 0})
         bucket = MovingAvg(10)
         Thread(target=TaskWorker.worker, args=[i, d, r, lambda: bucket.insert(1)]).start()
@@ -65,7 +65,8 @@ if __name__ == '__main__':
                 cur_total_mv = round(sum([r[i] for i in r], 2))
                 prediction.insert(m_avg.avg, cur_total_mv)
 
-                target = round(lower_bound+abs(lower_bound-upper_bound)/2,2)
+                target = round(lower_bound + abs(lower_bound - upper_bound) / 2, 2)
+
 
                 def next_operation():
                     if prediction.is_ready():
@@ -77,22 +78,22 @@ if __name__ == '__main__':
                 if lower_bound > m_avg.avg:
                     for i in d:
                         n_op = next_operation()
-                        d[i] = n_op/len(d) if n_op is not None and n_op > 0 else d[i] * 2
+                        d[i] = n_op / len(d) if n_op is not None and n_op > 0 else d[i] * 2
                     new_total_operation = round(sum([d[i] for i in d]), 2)
                     print(
                         f"{rounds:05d}::Targeting[{lower_bound} < {target} < {upper_bound}], now[{m_avg.avg}], increase operation with loading[{cur_total_mv}] from {cur_total_operation} to {new_total_operation}")
                 elif upper_bound < m_avg.avg:
                     for i in d:
                         n_op = next_operation()
-                        d[i] = n_op/len(d) if n_op is not None else d[i] * 0.85
-                    new_total_operation = sum([d[i] for i in d])
+                        d[i] = n_op / len(d) if n_op is not None else d[i] * 0.85
+                    new_total_operation = round(sum([d[i] for i in d]), 2)
                     print(
                         f"{rounds:05d}Targeting[{lower_bound} < {target} < {upper_bound}], now[{m_avg.avg}], decrease operation with loading[{cur_total_mv}] from {cur_total_operation} to {new_total_operation}")
                 else:
                     for i in d:
                         n_op = next_operation()
-                        d[i] = n_op/len(d) if n_op is not None else d[i] * 0.85
-                    new_total_operation = sum([d[i] for i in d])
+                        d[i] = n_op / len(d) if n_op is not None else d[i] * 0.85
+                    new_total_operation = round(sum([d[i] for i in d]), 2)
                     print(
                         f"{rounds:05d}Targeting[{lower_bound} < {target} < {upper_bound}], now[{m_avg.avg}], adjustment with loading[{cur_total_mv}] from {cur_total_operation} to {new_total_operation}")
         m_avg.insert(m.avg)

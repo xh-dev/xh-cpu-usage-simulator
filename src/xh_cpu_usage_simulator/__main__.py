@@ -29,18 +29,21 @@ if __name__ == '__main__':
 
     parser.add_argument("--min", help="minimum percentage cpu usage", type=float)
     parser.add_argument("--max", help="maximum percentage cpu usage", type=float)
+    parser.add_argument("--iv", help="initial value", type=float, default=1000)
 
     parsed_args = parser.parse_args(sys.argv[1:])
 
     lower_bound = parsed_args.min
     upper_bound = parsed_args.max
+    iv = parsed_args.iv
 
     validation(lower_bound, upper_bound)
 
     d = dict()
     r = dict()
-    for i in range(psutil.cpu_count(logical=False)):
-        d.update({f"{i}": 10})
+    cpu_count = psutil.cpu_count(logical=False)
+    for i in range(cpu_count):
+        d.update({f"{i}": iv/cpu_count})
         r.update({f"{i}-complete": 0})
         bucket = MovingAvg(10)
         Thread(target=TaskWorker.worker, args=[i, d, r, lambda: bucket.insert(1)]).start()

@@ -14,5 +14,5 @@ class PsMonitor:
     def monitor(self) -> Generator[Metrics, None, None]:
         # cpu_count = psutil.cpu_count()
         while True:
-            result = psutil.cpu_percent(interval=1, percpu=True)
-            yield Metrics(sum([i for i in result]))
+            result = psutil.cpu_percent(interval=1)
+            yield Metrics(result)

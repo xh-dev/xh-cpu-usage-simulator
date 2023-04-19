@@ -1,5 +1,5 @@
 class MovingAvg():
-    def __init__(self, size: int):
+    def __init__(self, size: float):
         self.data = []
         self.size = size
         self.cur_index = 0
@@ -7,7 +7,7 @@ class MovingAvg():
         for _ in range(size):
             self.data.append(0)
 
-    def insert(self, value: int):
+    def insert(self, value: float):
         self.data[self.cur_index] = value
         self.cur_index = (self.cur_index + 1) % self.size
         self.avg = round(sum(self.data) / self.size, 2)

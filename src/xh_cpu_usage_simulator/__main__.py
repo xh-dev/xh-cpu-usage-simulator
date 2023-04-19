@@ -1,7 +1,7 @@
 # This is a sample Python script.
 import argparse
 import sys
-from threading import Thread
+from multiprocessing import Process, Manager, Array
 
 import psutil
 
@@ -39,14 +39,18 @@ if __name__ == '__main__':
 
     validation(lower_bound, upper_bound)
 
-    d = dict()
-    r = dict()
+    d = Manager().dict()
+    r = Manager().dict()
     cpu_count = psutil.cpu_count(logical=False)
+
+    ps = []
     for i in range(cpu_count):
         d.update({f"{i}": iv / cpu_count})
         r.update({f"{i}-complete": 0})
-        bucket = MovingAvg(10)
-        Thread(target=TaskWorker.worker, args=[i, d, r, lambda: bucket.insert(1)]).start()
+        # bucket = MovingAvg(10)
+        p = Process(target=TaskWorker.worker, args=(i, d, r))
+        p.start()
+        ps.append(p)
 
     total_operation = sum([d[i] for i in d])
 

@@ -3,7 +3,12 @@ import time
 from xh_cpu_usage_simulator.MovingAvg import MovingAvg
 
 
-def worker(index: int, d: dict, r: dict, do_something) -> [int, int]:
+def worker(index: int, d: dict, r: dict) -> [int, int]:
+    bucket = MovingAvg(10)
+
+    def do_something():
+        bucket.insert(1)
+
     def get_time():
         t = time.time_ns()
         ms = t // 1_000_000
@@ -26,7 +31,7 @@ def worker(index: int, d: dict, r: dict, do_something) -> [int, int]:
 
             completed = task_to_run - target
             mv.insert(completed)
-            r.update({f"{index}-complete": round(mv.avg,2)})
+            r.update({f"{index}-complete": round(mv.avg, 2)})
 
             task_to_run = new_task_to_run
             # print(f"[Worker {index}]Rest target")
@@ -40,6 +45,6 @@ def worker(index: int, d: dict, r: dict, do_something) -> [int, int]:
             diff = (s + 1) * 1000 - n_ms
             # print(f"[Worker {index}]Taking {(n_ms - (s * 1000))} ms for {task_to_run} tasks [Sleep for {round(diff/1000, 4)} s]")
             if diff > 0:
-                time.sleep(diff/1000)
+                time.sleep(diff / 1000)
             else:
                 continue

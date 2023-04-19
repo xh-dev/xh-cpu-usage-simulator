@@ -4,12 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "xh-cpu-usage-simulator"
-version = "0.0.7"
+version = "0.0.8"
 description = "Tools simulating the cpu usage"
 readme = "README.md"
 requires-python = ">=3.6"
 classifiers = [ "Programming Language :: Python :: 3", "License :: OSI Approved :: MIT License", "Operating System :: OS Independent",]
-dependencies = [ "psutil==5.9.5", "scikit-learn=1.2.2", "numpy==1.24.2",]
+dependencies = [ "psutil==5.9.5", "scikit-learn==1.2.2", "numpy==1.24.2",]
 [[project.authors]]
 name = "xethhung"
 email = "pypi@xethh.dev"

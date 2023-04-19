@@ -38,7 +38,7 @@ if __name__ == '__main__':
                         d[i] = d[i] * 0.85
                     new_total_operation = sum([d[i] for i in d])
                     print(
-                        f"{rounds:05d}Targeting[{target}], now[{m_avg.avg}], increase operation from {cur_total_operation} to {new_total_operation}")
+                        f"{rounds:05d}Targeting[{target}], now[{m_avg.avg}], decreate operation from {cur_total_operation} to {new_total_operation}")
                 else:
                     print(
                         f"{rounds:05d}Targeting[{target}], now[{m_avg.avg}], nothing to do")

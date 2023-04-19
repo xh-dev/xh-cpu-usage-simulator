@@ -9,12 +9,13 @@ def worker(index: int, d: dict, do_something) -> [int, int]:
         return s, ms
 
     s, _ = get_time()
-    task_to_run = d[f"{index}"]
-    target = d[f"{index}"]
+
+    task_to_run = int(d[f"{index}"])
+    target = task_to_run
     while True:
         n_s, n_ms = get_time()
         if n_s != s:
-            new_task_to_run = d[f"{index}"]
+            new_task_to_run = int(d[f"{index}"])
             if task_to_run != new_task_to_run:
                 print(f"[Worker {index}]Target to run updated from {task_to_run} -> {new_task_to_run}")
             if target != 0:

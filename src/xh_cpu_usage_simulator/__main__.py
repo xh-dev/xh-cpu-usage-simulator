@@ -92,14 +92,14 @@ if __name__ == '__main__':
                         d[i] = n_op / len(d) if n_op is not None else d[i] * 0.85
                     new_total_operation = round(sum([d[i] for i in d]), 2)
                     print(
-                        f"{rounds:05d}Targeting[{lower_bound} < {target} < {upper_bound}], now[{m_avg.avg}], decrease operation with loading[{cur_total_mv}] from {cur_total_operation} to {new_total_operation}")
+                        f"{rounds:05d}::Targeting[{lower_bound} < {target} < {upper_bound}], now[{m_avg.avg}], decrease operation with loading[{cur_total_mv}] from {cur_total_operation} to {new_total_operation}")
                 else:
                     for i in d:
                         n_op = next_operation()
                         d[i] = n_op / len(d) if n_op is not None else d[i] * 0.85
                     new_total_operation = round(sum([d[i] for i in d]), 2)
                     print(
-                        f"{rounds:05d}Targeting[{lower_bound} < {target} < {upper_bound}], now[{m_avg.avg}], adjustment with loading[{cur_total_mv}] from {cur_total_operation} to {new_total_operation}")
+                        f"{rounds:05d}::Targeting[{lower_bound} < {target} < {upper_bound}], now[{m_avg.avg}], adjustment with loading[{cur_total_mv}] from {cur_total_operation} to {new_total_operation}")
         m_avg.insert(m.avg)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
